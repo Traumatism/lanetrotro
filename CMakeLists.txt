@@ -1,11 +1,18 @@
 cmake_minimum_required(VERSION 3.10)
 project(lanetrotro)
 
-# Add cJSON
 add_subdirectory(external/cjson)
 
-# Add the executable for your project
-add_executable(lanetrotro src/lanetrotro.c src/lanetrotro.h)
+add_executable(
+    lanetrotro
+    src/lib/module.h
+    src/lanetrotro.c
+    src/lanetrotro.h
 
-# Link the cJSON library
+    src/modules/modules.h
+
+    src/modules/ipinfo.c
+    src/modules/ctlogs.c
+)
+
 target_link_libraries(lanetrotro cjson)
