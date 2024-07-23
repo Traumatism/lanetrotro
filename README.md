@@ -1,5 +1,7 @@
 ## Lanetrotro 🫏
 
+Recursive OSINT tool using Obsidian templates (TBD)
+
 ## Install
 
 ```
