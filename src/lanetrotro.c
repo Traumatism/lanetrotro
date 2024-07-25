@@ -1,12 +1,14 @@
 #include "lanetrotro.h"
-#include "../external/cJSON/cJSON.h"
 #include "lib/module.h"
 
 #include "modules/modules.h"
 
+#include "../external/cJSON/cJSON.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 
 typedef struct
 {
@@ -29,17 +31,12 @@ int print_node(Node *node)
 
 int main(int argc, char **argv)
 {
-    Module null_module = {
-        .name = "__null_module",
-    };
-
     Module *modules[] = {
         &ipinfo_module,
-        &ctlogs_module,
-
-        /* TODO: assert this is the only module with name: __null_module */
-        &null_module,
+        // &ctlogs_module,
     };
+
+    int modules_count = sizeof(modules) / sizeof(modules[0]);
 
     print_banner();
 
@@ -115,13 +112,33 @@ int main(int argc, char **argv)
         logger_info("Running modules for node: %s", node.id);
 
         int j = 0;
+
         Module *module;
 
-        while ((module = modules[j]) != &null_module)
+        for (int i = 0; i < modules_count; i++)
         {
-            logger_info("Running module: %s", module->name);
+            module = modules[i];
 
-            j = j + 1;
+            char *to_validate = malloc(strlen(node.text) + 1);
+
+            if (to_validate == NULL)
+            {
+                logger_error("Out of memory!");
+                return 0;
+            }
+
+            strcpy(to_validate, node.text);
+
+            int is_valid = module->module_valiator_func(to_validate);
+
+            free(to_validate);
+
+            if (!is_valid)
+                continue;
+
+            logger_info("Running module %s for data: %s", module->name, node.text);
+
+            module->module_run_func(node.text);
         }
     }
 

@@ -5,7 +5,10 @@ add_subdirectory(external/cjson)
 
 add_executable(
     lanetrotro
+
     src/lib/module.h
+    src/lib/validate.h
+
     src/lanetrotro.c
     src/lanetrotro.h
 
