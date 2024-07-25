@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#pragma once
 int is_ip_address(char *text)
 {
     if (text == NULL)
