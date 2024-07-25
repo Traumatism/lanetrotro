@@ -1,6 +1,6 @@
 #include "lanetrotro.h"
-#include "lib/module.h"
 
+#include "lib/module.h"
 #include "modules/modules.h"
 
 #include "../external/cJSON/cJSON.h"
@@ -71,7 +71,6 @@ int main(int argc, char **argv)
     char buffer[buffer_size];
 
     int c;
-
     int i = -1;
 
     while ((c = fgetc(fp)) != EOF)
@@ -88,7 +87,6 @@ int main(int argc, char **argv)
     fclose(fp);
 
     cJSON *nodes = cJSON_Parse(buffer)->child;
-
     int nodes_count = cJSON_GetArraySize(nodes);
 
     logger_info("Found %d nodes", nodes_count);
@@ -116,8 +114,6 @@ int main(int argc, char **argv)
         };
 
         logger_info("Running modules for node: %s", node.id);
-
-        int j = 0;
 
         Module *module;
 
