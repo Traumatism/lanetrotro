@@ -12,9 +12,13 @@
 
 typedef struct
 {
-    char *id;
-    char *type;
-    char *text;
+    /* Node content */
+
+    char *id;   /* Node ID */
+    char *type; /* Node type */
+    char *text; /* Node content */
+
+    /* 2D-Map parameters */
 
     signed x;
     signed y;
@@ -47,9 +51,10 @@ int main(int argc, char **argv)
     }
 
     char *file_path = argv[1];
-    FILE *fp;
 
-    if (!(fp = fopen(file_path, "r")))
+    FILE *fp = fopen(file_path, "r");
+
+    if (fp == NULL)
     {
         logger_error("Failed to open file.");
         return 1;
@@ -58,19 +63,19 @@ int main(int argc, char **argv)
     logger_info("Target file: %s", file_path);
 
     fseek(fp, 0L, SEEK_END); /* Go to file end */
+
     int buffer_size = ftell(fp);
+
     fseek(fp, 0L, SEEK_SET); /* Go to file start */
 
     char buffer[buffer_size];
 
     int c;
-    int i = 0;
+
+    int i = -1;
 
     while ((c = fgetc(fp)) != EOF)
-    {
-        buffer[i] = c;
-        i++;
-    }
+        buffer[i = i + 1] = c;
 
     buffer[buffer_size] = '\0';
 
@@ -85,6 +90,7 @@ int main(int argc, char **argv)
     cJSON *nodes = cJSON_Parse(buffer)->child;
 
     int nodes_count = cJSON_GetArraySize(nodes);
+
     logger_info("Found %d nodes", nodes_count);
 
     for (int i = 0; i < nodes_count; i++)

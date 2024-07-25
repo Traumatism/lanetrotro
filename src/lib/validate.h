@@ -6,11 +6,10 @@
 int is_ip_address(char *text)
 {
     if (text == NULL)
-    {
         return 0;
-    }
 
     int dots = 0;
+
     char *ptr = strtok(text, ".");
 
     while (ptr)
@@ -24,7 +23,6 @@ int is_ip_address(char *text)
             return 0;
 
         ptr = strtok(NULL, ".");
-
         dots++;
     }
 
