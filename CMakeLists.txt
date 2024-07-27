@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(lanetrotro)
 
-add_subdirectory(external/cjson)
+add_subdirectory(external/cJSON)
 
 add_executable(
     lanetrotro
